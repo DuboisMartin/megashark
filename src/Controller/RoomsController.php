@@ -6,6 +6,7 @@ use App\Controller\AppController;
 /**
  * Rooms Controller
  *
+ * @property \App\Model\Table\RoomsTable $Rooms
  *
  * @method \App\Model\Entity\Room[] paginate($object = null, array $settings = [])
  */
@@ -35,7 +36,7 @@ class RoomsController extends AppController
     public function view($id = null)
     {
         $room = $this->Rooms->get($id, [
-            'contain' => []
+            'contain' => ['Showtimes']
         ]);
 
         $this->set('room', $room);

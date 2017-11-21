@@ -1,13 +1,17 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \Cake\Datasource\EntityInterface[]|\Cake\Collection\CollectionInterface $showtimes
+ * @var \App\Model\Entity\Showtime[]|\Cake\Collection\CollectionInterface $showtimes
  */
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('New Showtime'), ['action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Movies'), ['controller' => 'Movies', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Movie'), ['controller' => 'Movies', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Rooms'), ['controller' => 'Rooms', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Room'), ['controller' => 'Rooms', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="showtimes index large-9 medium-8 columns content">
@@ -29,8 +33,8 @@
             <?php foreach ($showtimes as $showtime): ?>
             <tr>
                 <td><?= $this->Number->format($showtime->id) ?></td>
-                <td><?= $this->Number->format($showtime->movie_id) ?></td>
-                <td><?= $this->Number->format($showtime->room_id) ?></td>
+                <td><?= $showtime->has('movie') ? $this->Html->link($showtime->movie->name, ['controller' => 'Movies', 'action' => 'view', $showtime->movie->id]) : '' ?></td>
+                <td><?= $showtime->has('room') ? $this->Html->link($showtime->room->name, ['controller' => 'Rooms', 'action' => 'view', $showtime->room->id]) : '' ?></td>
                 <td><?= h($showtime->start) ?></td>
                 <td><?= h($showtime->end) ?></td>
                 <td><?= h($showtime->created) ?></td>
