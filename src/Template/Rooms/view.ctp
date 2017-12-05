@@ -80,3 +80,33 @@
 <?php
     endforeach;
 ?>
+
+<div class="showtimes index large-9 medium-8 columns content">
+    <h3><?= __('Showtimes') ?></h3>
+    <table cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('movie_id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('room_id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('start') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('end') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($showtimes as $showtime): ?>
+            <tr>
+                <td><?= $this->Number->format($showtime->id) ?></td>
+                <td><?= $showtime->has('movie') ? $this->Html->link($showtime->movie->name, ['controller' => 'Movies', 'action' => 'view', $showtime->movie->id]) : '' ?></td>
+                <td><?= $showtime->has('room') ? $this->Html->link($showtime->room->name, ['controller' => 'Rooms', 'action' => 'view', $showtime->room->id]) : '' ?></td>
+                <td><?= h($showtime->start) ?></td>
+                <td><?= h($showtime->end) ?></td>
+                <td><?= h($showtime->created) ?></td>
+                <td><?= h($showtime->modified) ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
