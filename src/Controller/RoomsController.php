@@ -9,6 +9,7 @@ use Cake\I18n\Time;
  *
  * @property \App\Model\Table\RoomsTable $Rooms
  * @property \App\Model\Table\ShowTimesTable $Showtimes
+ * @property \App\Model\Table\MoviesTable $Movies
  *
  * @method \App\Model\Entity\Room[] paginate($object = null, array $settings = [])
  */
@@ -45,12 +46,12 @@ class RoomsController extends AppController
         
         $showtimesTab = $this->Rooms->Showtimes
             ->find()
-            ->select(['id', 'movie_id', 'room_id', 'start', 'end'])
             ->where(['room_id =' => $room->id])
             ->where(['start >' => $date])
             ->where(['start <=' => $datePlus])
-            ->order(['created' => 'DESC']);
-            
+            ->order(['created' => 'DESC'])
+            ->contain(['Movies']);
+  
         $this->set('showtimes', $showtimesTab);
         $this->set('room', $room);
         $this->set('_serialize', ['room']);
