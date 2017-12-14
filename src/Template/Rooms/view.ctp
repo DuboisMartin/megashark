@@ -39,74 +39,35 @@
             <td><?= h($room->modified) ?></td>
         </tr>
     </table>
-  
-</div>
-<?php 
-    foreach ($showtimes as $showtime):
-?>
-<div class="showtimes view large-9 medium-8 columns content">
-    <h3><?= h($showtime->id) ?></h3>
-    <table class="vertical-table">
-        <tr>
-            <th scope="row"><?= __('Movie') ?></th>
-            <td><?= $showtime->has('movie') ? $this->Html->link($showtime->movie->name, ['controller' => 'Movies', 'action' => 'view', $showtime->movie->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Room') ?></th>
-            <td><?= $showtime->has('room') ? $this->Html->link($showtime->room->name, ['controller' => 'Rooms', 'action' => 'view', $showtime->room->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($showtime->id) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Start') ?></th>
-            <td><?= h($showtime->start) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('End') ?></th>
-            <td><?= h($showtime->end) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Created') ?></th>
-            <td><?= h($showtime->created) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Modified') ?></th>
-            <td><?= h($showtime->modified) ?></td>
-        </tr>
-    </table>
-</div>
-<?php
-    endforeach;
-?>
-
-<div class="showtimes index large-9 medium-8 columns content">
-    <h3><?= __('Showtimes') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
+    
+    <div class="related">
+        <?php ($showtimesByDayNumber) ?>
+        <h4><?= __('Related Showtimes') ?></h4>
+        
+        <table cellpadding="0" cellspacing="0">
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('movie_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('room_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('start') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('end') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
+                <th>Lundi</th>
+                <th>Mardi</th>
+                <th>Mercredi</th>
+                <th>Jeudi</th>
+                <th>Vendredi</th>
+                <th>Samedi</th>
+                <th>Dimanche</th>
             </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($showtimes as $showtime): ?>
+            
             <tr>
-                <td><?= $this->Number->format($showtime->id) ?></td>
-                <td><?= $showtime->has('movie') ? $this->Html->link($showtime->movie->name, ['controller' => 'Movies', 'action' => 'view', $showtime->movie->id]) : '' ?></td>
-                <td><?= $showtime->has('room') ? $this->Html->link($showtime->room->name, ['controller' => 'Rooms', 'action' => 'view', $showtime->room->id]) : '' ?></td>
-                <td><?= h($showtime->start) ?></td>
-                <td><?= h($showtime->end) ?></td>
-                <td><?= h($showtime->created) ?></td>
-                <td><?= h($showtime->modified) ?></td>
+                <?php for ($i = 1; $i < 7; $i++): ?>
+                    <td>
+                        <?php if (isset($showtimesByDayNumber[$i])): ?>
+                        <?php foreach ($showtimesByDayNumber[$i] as $showtime): ?>
+                            <?= $showtime->has('movie') ? $this->Html->link($showtime->movie->name, ['controller' => 'Movies', 'action' => 'view', $showtime->movie->id]) : '' ?>
+                            <?= h($showtime->start) ?>
+                            <?= h($showtime->end) ?>
+                        <?php endforeach; ?>
+                        <?php endif; ?>
+                    </td>
+                <?php endfor; ?>
             </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+        </table>
+    </div>
 </div>
